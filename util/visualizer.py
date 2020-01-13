@@ -23,15 +23,25 @@ class Visualizer():
         self.name = opt.name
         self.port = opt.display_port
         self.saved = False
+        
         if self.display_id > 0: #conección a visdom
             import visdom
             self.ncols = opt.display_ncols
-            self.vis = visdom.Visdom(server=opt.display_server, port=opt.display_port, env=opt.display_env)
+            self.vis = visdom.Visdom(server=opt.display_server, port=opt.display_port, env=opt.display_env, use_incoming_socket=False)
             if not self.vis.check_connection():
-                self.create_visdom_connections()
+                try:
+                    self.create_visdom_connections()
+                except Exception as e:
+                    "print('\n\nNo se puede conectar a Visdom. \n Intentando inicializar Visdom....')"      
 
         if self.use_html:  # crear un HTML en <checkpoints_dir>/web/; las imágenes seran guardados en <checkpoints_dir>/web/images/
             self.web_dir = os.path.join(opt.checkpoints_dir, opt.name, 'web')
             self.img_dir = os.path.join(self.web_dir, 'images')
             print('crear dirección web %s...' % self.web_dir)
             util.mkdirs([self.web_dir, self.img_dir])
+
+    def create_visdom_connections(self):
+        cmd = sys.executable + ' -m visdom.server -p %d &>/dev/null &' % self.port
+        #print('\n\nNo se puede conectar a Visdom. \n Intentando inicializar Visdom....')
+        #print('Command: %s' % cmd)
+        Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
