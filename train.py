@@ -1,3 +1,4 @@
+import time
 from options.train_options import TrainOptions
 from data import create_dataset
 from models import create_model
@@ -15,4 +16,14 @@ if __name__ == '__main__':
 	print('The number of testing images = %d' % test_dataset_size)
 
 	model = create_model(opt)
-	print(model)
+
+	for epoch in range(opt.epoch_count, opt.n_epochs + 1):
+		epoch_start_time = time.time()
+		iter_data_time = time.time()
+		epoch_iter = 0
+
+		for input_img, selector_img, target_img in train_dataset:
+			model.train_step(input_img, selector_img, target_img)
+
+		for input_img, selector_img, target_img in test_dataset:
+			model.test_step(input_img, selector_img, target_img)

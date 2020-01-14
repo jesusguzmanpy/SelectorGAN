@@ -7,7 +7,11 @@ class BaseModel(ABC):
 		self.isTrain = opt.isTrain
 
 	@abstractmethod
-	def set_input(self, input):
+	def train_step(self, input_img, selector_img, target_img):
+		pass
+
+	@abstractmethod
+	def test_step(self, input_img, selector_img, target_img):
 		pass
 
 	def setup(self, opt):
