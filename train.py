@@ -14,6 +14,5 @@ if __name__ == '__main__':
 	print('The number of training images = %d' % train_dataset_size)
 	print('The number of testing images = %d' % test_dataset_size)
 
-
 	model = create_model(opt)
-	model.setup(opt)
+	print(model)

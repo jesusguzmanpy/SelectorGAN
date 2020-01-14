@@ -24,6 +24,7 @@ class BaseOptions():
 
     def parse(self):
         opt = self.gather_options()
-
+        opt.isTrain = self.isTrain
+        
         self.opt = opt
         return self.opt

@@ -1,5 +1,5 @@
+from options.test_options import TestOptions
 
 
 if __name__ == '__main__':
-
-	print("fffffff")
+    opt = TestOptions().parse()
