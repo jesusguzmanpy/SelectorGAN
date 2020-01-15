@@ -5,7 +5,7 @@ from os import path
 
 
 def verbose_dataset(opt, txt):
-    if(opt.verbose):
+    if(opt.verbose == 1):
         print(txt)
 
 
@@ -15,7 +15,7 @@ def verify_dataset(opt):
     if(path.exists('dataset/'+opt.dataroot)):
         aux_status = True
     else:
-        verbose_dataset(opt, "- Folder " + opt.dataroot + "not found")
+        verbose_dataset(opt, "- Folder " + opt.dataroot + " not found")
 
     if(path.exists('dataset/'+opt.dataroot+'/train')):
         aux_status = True
